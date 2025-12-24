@@ -9,6 +9,6 @@ CONFIG = dict(
     port=env('PORT'),
     debug=True,
 )
-#   -   -   -   -   -   -   -   -   #
-__all__ = [ 'CONFIG', ]
+TOKEN_NAME = 'tkn'
+MASTER_PASSWORD = env('MASTER_PASSWORD')
 #   -   -   -   -   -   -   -   -   #

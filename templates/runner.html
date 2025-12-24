@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Terminal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/runner.css') }}">
+</head>
+<body>
+  <div class="terminal" id="terminal">
+      {% for runner in runners %}
+        <div class="line">pl@plagu3dr:~$ {{ runner.cmd }}</div>
+        <pre class="output">{{ runner.data }}</pre>
+      {% endfor %}
+  </div>
+  <div class="input-area">
+    <span class="prompt">pl@:~$</span>
+    <input class="command-input" id="commandInput" placeholder="Type command..." />
+    <button class="btn" id="runBtn">Run</button>
+    <button class="btn leave" id="leaveBtn">Leave</button>
+  </div>
+  <script src="{{ url_for('static', filename='js/runner.js') }}"></script>
+</body>
+</html>
