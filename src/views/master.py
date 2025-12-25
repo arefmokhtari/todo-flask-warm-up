@@ -1,16 +1,19 @@
 #   -   -   -   -   -   -   -   -   #
 from ..models import MasterModel
 from .view import View
-from flask import Blueprint
 from flask import redirect, make_response
 from ..config import TOKEN_NAME, MASTER_PASSWORD
 from ..decorators.auth import auth
 from datetime import timedelta, datetime as dt
+from ..decorators.blueprint import blueprint, route
 #   -   -   -   -   -   -   -   -   #
-class RunnerView(View):
+@blueprint(__name__)
+class MasterView(View):
+    @route('/login')
     def login(self):
         return self.response('login')
 
+    @route('/login', 'post')
     def login_form(self):
         data = self._get_data()
         master: MasterModel = MasterModel.query.filter_by(username=data.get('username'),).first()
@@ -21,6 +24,7 @@ class RunnerView(View):
         return response
 
     @auth
+    @route('/leave-master', 'post')
     def logout(self):
         response = make_response(self.response({
             'message': 'ok',
@@ -29,6 +33,7 @@ class RunnerView(View):
         response.delete_cookie(TOKEN_NAME)
         return response
     
+    # @route('/create-master')
     def create_master(self):
         MasterModel.create_master(
             'plagu3dr',
@@ -37,10 +42,4 @@ class RunnerView(View):
         return self.response({
             'message': 'ok',
         })
-#   -   -   -   -   -   -   -   -   #
-blueprint = Blueprint('master', __name__)
-blueprint.add_url_rule('/login', view_func=RunnerView().login, methods=['GET'],)
-blueprint.add_url_rule('/login', view_func=RunnerView().login_form, methods=['POST'],)
-blueprint.add_url_rule('/leave-master', view_func=RunnerView().logout, methods=['POST'],)
-blueprint.add_url_rule('/create-master', view_func=RunnerView().create_master, methods=['GET',],)
 #   -   -   -   -   -   -   -   -   #

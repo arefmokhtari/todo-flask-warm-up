@@ -1,13 +1,12 @@
 #   -   -   -   -   -   -   -   -   #
 from src.app import app
-from src.config import CONFIG
-from src.views.runner import blueprint as runner
-from src.views.master import blueprint as master
-from src.views.index import blueprint as index
+import src.views as _
+from src.config import APP_CONFIG
+from src.decorators.blueprint import BLUEPRINTS
 #   -   -   -   -   -   -   -   -   #
-for blueprint in (runner, master, index):
+for blueprint in BLUEPRINTS:
     app.register_blueprint(blueprint)
 #   -   -   -   -   -   -   -   -   #
 if __name__ == '__main__':    
-    app.run(**CONFIG)
+    app.run(**APP_CONFIG)
 #   -   -   -   -   -   -   -   -   #

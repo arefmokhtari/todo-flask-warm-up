@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 #   -   -   -   -   -   -   -   -   #
 load_dotenv()
 #   -   -   -   -   -   -   -   -   #
-CONFIG = dict(
+APP_CONFIG = dict(
     host=env('HOST'),
     port=env('PORT'),
     debug=True,

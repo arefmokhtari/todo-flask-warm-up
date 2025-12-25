@@ -19,6 +19,7 @@ class View(MethodView):
     def tempate(self, name: str, **context):
         return render_template(f'{name}.html', **context)
     #   -   -   -   -   #
+    _registry: list = []
 #   -   -   -   -   -   -   -   -   #
 __all__ = [ 'View', ]
 #   -   -   -   -   -   -   -   -   #

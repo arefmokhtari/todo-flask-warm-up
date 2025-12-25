@@ -1,18 +1,20 @@
 #   -   -   -   -   -   -   -   -   #
 from .view import View
-from flask import Blueprint
+from ..decorators.blueprint import blueprint, route
 from ..models import RunnerModel
 from ..decorators.auth import auth
 from subprocess import run as subprocess_run
 #   -   -   -   -   -   -   -   -   #
+@blueprint(__name__)
 class RunnerView(View):
     @auth
+    @route('/runner')
     def get(self):
         runners = RunnerModel.query.all()
-        print(runners)
         return self.response('runner', runners=runners)
 
     @auth
+    @route('/runner', 'post',)
     def post(self):
         data = self._get_data('data')
         cmd = data.get('cmd')
@@ -34,9 +36,4 @@ class RunnerView(View):
         runner.save()
 
         return self.response(data)
-
-#   -   -   -   -   -   -   -   -   #
-blueprint = Blueprint('runner', __name__,)
-blueprint.add_url_rule('/runner', view_func=RunnerView.as_view('get'), methods=['GET'])
-blueprint.add_url_rule('/runner', view_func=RunnerView.as_view('post'), methods=['POST',],)
 #   -   -   -   -   -   -   -   -   #

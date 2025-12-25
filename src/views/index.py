@@ -1,13 +1,12 @@
 #   -   -   -   -   -   -   -   -   #
 from .view import View
-from flask import Blueprint
+from ..decorators.blueprint import blueprint, route
 #   -   -   -   -   -   -   -   -   #
 
+@blueprint(__name__)
 class IndexView(View):
+    @route('/')
     def index(self):
         return self.response('index')
-
-#   -   -   -   -   -   -   -   -   #
-blueprint = Blueprint('index', __name__)
-blueprint.add_url_rule('/', view_func=IndexView().index, methods=['GET',],)
+    
 #   -   -   -   -   -   -   -   -   #
